@@ -40,11 +40,11 @@ export default function Filter({ onFilterChange, maxPrice }: FilterProps) {
 
   const updateParentFilters = useCallback(() => {
     const activeCategories = Object.entries(filters.categories)
-      .filter(([_, isChecked]) => isChecked)
+      .filter(([, isChecked]) => isChecked)
       .map(([category]) => category)
 
     const activeSubcategories = Object.entries(filters.subcategories)
-      .filter(([_, isChecked]) => isChecked)
+      .filter(([, isChecked]) => isChecked)
       .map(([subcategory]) => subcategory)
 
     onFilterChange({
