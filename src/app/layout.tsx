@@ -22,11 +22,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
-      <body className={`${inter.className} bg-gradient-to-br from-black via-neutral-950 to-red-950/90 min-h-screen flex flex-col`}>
+    <html lang="es" className="overflow-x-hidden">
+      <body className={`${inter.className} bg-gradient-to-br from-black via-neutral-950 to-red-950/90 min-h-screen flex flex-col overflow-x-hidden`}>
         <CartProvider>
           <Logo />
-          <main className="flex-1">
+          <main className="flex-1 w-full">
             {children}
           </main>
           <Footer />

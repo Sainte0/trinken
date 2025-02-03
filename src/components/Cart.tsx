@@ -31,6 +31,12 @@ export default function Cart() {
 
   const handleCheckout = () => {
     if (items.length === 0) return
+    
+    // Check if all required fields are filled
+    if (!shippingInfo.name || !shippingInfo.address || !shippingInfo.phone) {
+      alert('Por favor complete todos los campos obligatorios (*)');
+      return;
+    }
 
     const orderItems = items
       .map(item => `${item.quantity}x ${item.product.title} (ARS $${item.product.price.toLocaleString()})`)

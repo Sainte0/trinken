@@ -42,8 +42,8 @@ export default function Home() {
   }, [currentFilters])
 
   return (
-    <main className="min-h-screen">
-      <div className="container mx-auto px-4">
+    <main className="min-h-screen w-full overflow-hidden">
+      <div className="max-w-[100vw] mx-auto px-4">
         <Banner />
         <Promotions />
         <div className="flex flex-col lg:flex-row gap-4">
