@@ -1,6 +1,6 @@
 'use client'
 import { useCart } from '@/context/CartContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type ShippingInfo = {
   name: string;
@@ -20,6 +20,18 @@ export default function Cart() {
     notes: ''
   })
   
+  // Add/remove cart-open class to body when cart visibility changes
+  useEffect(() => {
+    const whatsappButton = document.querySelector('.whatsapp-button');
+    if (whatsappButton) {
+      if (isCartVisible) {
+        whatsappButton.classList.add('hidden');
+      } else {
+        whatsappButton.classList.remove('hidden');
+      }
+    }
+  }, [isCartVisible]);
+
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
