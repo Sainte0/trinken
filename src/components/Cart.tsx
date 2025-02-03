@@ -33,19 +33,19 @@ export default function Cart() {
     if (items.length === 0) return
 
     const orderItems = items
-      .map(item => `${item.quantity}x ${item.product.title} ($${item.product.price})`)
+      .map(item => `${item.quantity}x ${item.product.title} (ARS $${item.product.price.toLocaleString()})`)
       .join('\n')
     
     const shippingDetails = `
-Shipping Details:
-Name: ${shippingInfo.name}
-Address: ${shippingInfo.address}
-Phone: ${shippingInfo.phone}
-Notes: ${shippingInfo.notes}`
+Datos de Envío:
+Nombre: ${shippingInfo.name}
+Dirección: ${shippingInfo.address}
+Teléfono: ${shippingInfo.phone}
+Notas: ${shippingInfo.notes}`
 
-    const totalMessage = `\n\nTotal: $${total.toFixed(2)}`
+    const totalMessage = `\n\nTotal: ARS $${total.toLocaleString()}`
     
-    const whatsappMessage = encodeURIComponent(`Hello! I would like to order:\n\n${orderItems}${totalMessage}\n${shippingDetails}`)
+    const whatsappMessage = encodeURIComponent(`¡Hola! Me gustaría hacer el siguiente pedido:\n\n${orderItems}${totalMessage}\n${shippingDetails}`)
     window.open(`https://wa.me/5493513341366?text=${whatsappMessage}`, '_blank')
     setShowForm(false)
   }
@@ -59,40 +59,40 @@ Notes: ${shippingInfo.notes}`
       {items.length === 0 ? (
         <p className="text-neutral-400">Tu carrito está vacío</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 max-h-[30vh] md:max-h-[40vh] lg:max-h-[70vh] overflow-y-auto pr-2">
           {items.map(item => (
-            <div key={item.product.id} className="flex flex-col gap-2 border-b border-neutral-800 pb-2">
-              <h3 className="font-semibold text-neutral-200">{item.product.title}</h3>
+            <div key={item.product.id} className="flex flex-col gap-1 border-b border-neutral-800 pb-2">
+              <h3 className="font-semibold text-neutral-200 text-sm lg:text-base">{item.product.title}</h3>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                    className="px-2 py-1 bg-neutral-800 hover:bg-neutral-700 rounded"
+                    className="px-2 py-0.5 lg:py-1 bg-neutral-800 hover:bg-neutral-700 rounded text-sm"
                   >
                     -
                   </button>
-                  <span>{item.quantity}</span>
+                  <span className="text-sm lg:text-base">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                    className="px-2 py-1 bg-neutral-800 hover:bg-neutral-700 rounded"
+                    className="px-2 py-0.5 lg:py-1 bg-neutral-800 hover:bg-neutral-700 rounded text-sm"
                   >
                     +
                   </button>
                 </div>
                 <button
                   onClick={() => removeFromCart(item.product.id)}
-                  className="text-red-500 hover:text-red-400"
+                  className="text-red-500 hover:text-red-400 text-sm lg:text-base"
                 >
                   Eliminar
                 </button>
               </div>
-              <p className="text-amber-500">
+              <p className="text-amber-500 text-sm lg:text-base">
                 ARS ${(item.product.price * item.quantity).toLocaleString()}
               </p>
             </div>
           ))}
           
-          <div className="border-t border-neutral-800 pt-4 mt-4">
+          <div className="border-t border-neutral-800 pt-4 mt-4 sticky bottom-0 bg-black">
             <p className="font-bold text-amber-500">
               Total: ARS ${total.toLocaleString()}
             </p>

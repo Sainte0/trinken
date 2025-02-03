@@ -1,12 +1,11 @@
 'use client'
-import { useState, useCallback } from 'react'
-import Logo from '@/components/Logo'
+import { useState, useCallback, useEffect } from 'react'
 import Banner from '@/components/Banner'
 import ProductGrid from '@/components/ProductGrid'
 import Filter from '@/components/Filter'
 import Cart from '@/components/Cart'
 import Features from '@/components/Features'
-import Footer from '@/components/Footer'
+import Promotions from '@/components/Promotions'
 import { products } from '@/data/products'
 
 type Filters = {
@@ -19,6 +18,7 @@ type Filters = {
 
 export default function Home() {
   const maxPrice = Math.max(...products.map(p => p.price))
+  const [isLoading, setIsLoading] = useState(true)
   const [currentFilters, setCurrentFilters] = useState<Filters>({
     categories: ['all'],
     subcategories: [],
@@ -32,11 +32,20 @@ export default function Home() {
     setCurrentFilters(newFilters)
   }, [])
 
+  useEffect(() => {
+    // Simulate loading delay
+    setIsLoading(true)
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [currentFilters])
+
   return (
     <main className="min-h-screen">
       <div className="container mx-auto px-4">
-        <Logo />
         <Banner />
+        <Promotions />
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="lg:hidden mb-4">
             <button 
@@ -57,11 +66,10 @@ export default function Home() {
           <div className="hidden lg:block">
             <Filter maxPrice={maxPrice} onFilterChange={handleFilterChange} />
           </div>
-          <ProductGrid filters={currentFilters} />
+          <ProductGrid filters={currentFilters} isLoading={isLoading} />
           <Cart />
         </div>
         <Features />
-        <Footer />
       </div>
     </main>
   )

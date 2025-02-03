@@ -1,35 +1,37 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Footer from '@/components/Footer'
 import { CartProvider } from '@/context/CartContext'
-import AgeVerification from '@/components/AgeVerification'
-import WhatsAppButton from '@/components/WhatsAppButton'
+import Logo from '@/components/Logo'
 
-const poppins = Poppins({ 
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Tienda de Bebidas",
-  description: "Tu tienda favorita de bebidas",
-};
+  title: 'Trinken - Delivery de Bebidas',
+  description: 'Delivery de bebidas en Córdoba Capital',
+  icons: {
+    icon: '/images/logo.jpg',
+    apple: '/images/logo.jpg',
+  }
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} bg-neutral-900`}>
+    <html lang="es">
+      <body className={`${inter.className} bg-gradient-to-br from-black via-neutral-950 to-red-950/90 min-h-screen flex flex-col`}>
         <CartProvider>
-          <AgeVerification />
-          {children}
-          <WhatsAppButton />
+          <Logo />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </CartProvider>
       </body>
     </html>
-  );
-}
+  )
+} 
