@@ -30,8 +30,17 @@ export default function Cart() {
   }
 
   const handleCheckout = () => {
-    if (items.length === 0) return
+    if (items.length === 0) {
+      alert('Tu carrito está vacío');
+      return;
+    }
     
+    // If form is not shown yet, show it first
+    if (!showForm) {
+      setShowForm(true);
+      return;
+    }
+
     // Check if all required fields are filled
     if (!shippingInfo.name || !shippingInfo.address || !shippingInfo.phone) {
       alert('Por favor complete todos los campos obligatorios (*)');
@@ -42,6 +51,21 @@ export default function Cart() {
       .map(item => `${item.quantity}x ${item.product.title} (ARS $${item.product.price.toLocaleString()})`)
       .join('\n')
     
+    // Get active promotions based on total
+    let activePromotions: string[] = [];
+    if (total >= 100000) {
+      activePromotions = ['Envío gratis', '1 Bolsa de hielo de 4kg', '10 Vasos de plástico'];
+    } else if (total >= 75000) {
+      activePromotions = ['Envío gratis', '1 Bolsa de hielo de 4kg'];
+    } else if (total >= 50000) {
+      activePromotions = ['1 Bolsa de hielo de 4kg gratis'];
+    }
+
+    // Add promotions to message if any are active
+    const promotionsMessage = activePromotions.length > 0 
+      ? `\n\nPromociones Aplicadas:\n${activePromotions.map(promo => `✓ ${promo}`).join('\n')}`
+      : '';
+    
     const shippingDetails = `
 Datos de Envío:
 Nombre: ${shippingInfo.name}
@@ -51,7 +75,7 @@ Notas: ${shippingInfo.notes}`
 
     const totalMessage = `\n\nTotal: ARS $${total.toLocaleString()}`
     
-    const whatsappMessage = encodeURIComponent(`¡Hola! Me gustaría hacer el siguiente pedido:\n\n${orderItems}${totalMessage}\n${shippingDetails}`)
+    const whatsappMessage = encodeURIComponent(`¡Hola! Me gustaría hacer el siguiente pedido:\n\n${orderItems}${totalMessage}${promotionsMessage}\n${shippingDetails}`)
     window.open(`https://wa.me/5493513341366?text=${whatsappMessage}`, '_blank')
     setShowForm(false)
   }

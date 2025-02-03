@@ -79,17 +79,10 @@ export default function Banner() {
               </div>
             </div>
 
-            {/* Right side - Pattern */}
+            {/* Right side - Image */}
             <div className="relative h-[200px] md:h-[300px] flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0 grid grid-cols-6 gap-2">
-                  {Array.from({ length: 48 }).map((_, i) => (
-                    <div key={i} className="aspect-square bg-red-500/30 rounded-lg" />
-                  ))}
-                </div>
-              </div>
-              <div className="relative z-10 text-center">
-                <div className="text-8xl text-red-500/20 font-bold font-['Oswald']">24/7</div>
+              <div className="absolute inset-0 bg-[url('/images/banner.jpeg')] bg-cover bg-center opacity-80">
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
               </div>
             </div>
           </div>
